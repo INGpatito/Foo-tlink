@@ -1,4 +1,4 @@
-name: Despliegue Automático Footlink
+name: Despliegue Automatico Footlink
 
     on:
       push:
@@ -10,7 +10,7 @@ name: Despliegue Automático Footlink
         runs-on: self-hosted
         
         steps:
-          - name: Descargar el código
+          - name: Descargar el codigo
             uses: actions/checkout@v4
             
           - name: Configurar Node.js
@@ -22,11 +22,9 @@ name: Despliegue Automático Footlink
             working-directory: ./footlink
             run: npm install
             
-          - name: Construir la aplicación
+          - name: Construir la aplicacion
             working-directory: ./footlink
             run: npm run build
             
           - name: Desplegar a Nginx
-            run: |
-              rsync -av --delete ./footlink/dist/ /home/orangepi/Foo-
-  tlink/footlink/dist/
+            run: rsync -av --delete ./footlink/dist/ /home/orangepi/Foo-tlink/footlink/dist/
