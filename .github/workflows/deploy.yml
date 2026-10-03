@@ -1,31 +1,22 @@
+name: Deploy
 
-    name: Despliegue Automatico Footlink
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
-    on:
-      push:
-        branches:
-          - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
 
-    jobs:
-      build-and-deploy:
-        runs-on: self-hosted
-        
-        steps:
-          - name: Descargar el codigo
-            uses: actions/checkout@v4
-            
-          - name: Configurar Node.js
-            uses: actions/setup-node@v4
-            with:
-              node-version: '18'
-              
-          - name: Instalar dependencias
-            working-directory: ./footlink
-            run: npm install
-            
-          - name: Construir la aplicacion
-            working-directory: ./footlink
-            run: npm run build
-            
-          - name: Desplegar a Nginx
-            run: rsync -av --delete ./footlink/dist/ /home/orangepi/Foo-tlink/footlink/dist/
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Instalar dependencias
+        working-directory: ./footlink
+        run: rm -f package-lock.json && npm install
